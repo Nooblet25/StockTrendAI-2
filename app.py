@@ -122,22 +122,20 @@ def predict():
         # Set default values if not provided
         current_year = datetime.now().year
         end_year = current_year  # Default to current year
-        horizon = 7  # Default to 7 days
         
         try:
             if 'end_year' in request.form and request.form['end_year']:
                 end_year = int(request.form['end_year'])
-            if 'horizon' in request.form and request.form['horizon']:
-                horizon = int(request.form['horizon'])
+                if end_year > 2030:
+                    return jsonify({'error': 'Predictions are only available until 2030'}), 400
         except ValueError as e:
             print(f"Error parsing parameters: {e}")
-            return jsonify({'error': 'Invalid year or horizon format'}), 400
+            return jsonify({'error': 'Invalid year format'}), 400
 
         print(f"\nProcessing prediction:")
         print(f"Ticker: {ticker}")
         print(f"Model: {model_choice}")
         print(f"End Year: {end_year}")
-        print(f"Horizon: {horizon}")
 
         # Fetch and process data
         try:
@@ -246,7 +244,7 @@ def predict():
             elif model_choice == 'arima':
                 series = df['Close']
                 model = ARIMA(series, order=(5, 1, 0)).fit()
-                forecast = model.forecast(steps=horizon).tolist()
+                forecast = model.forecast(steps=7).tolist()  # Fixed 7-day forecast
                 return jsonify({
                     'model': 'arima',
                     'forecast': forecast,

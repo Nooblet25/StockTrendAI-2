@@ -4,7 +4,7 @@ A web-based application that uses machine learning models to predict stock marke
 
 ## Features
 
-- Multiple ML models for stock prediction
+- Multiple ML models for stock prediction (predictions available until 2030)
 - Interactive stock price charts
 - Real-time market sentiment analysis
 - Risk assessment
@@ -23,7 +23,7 @@ A web-based application that uses machine learning models to predict stock marke
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/stocktrendai.git
+git clone https://github.com/Nooblet25/StockTrendAI-2.git
 cd stocktrendai
 ```
 

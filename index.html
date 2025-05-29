@@ -314,6 +314,22 @@
                 </div>
                 <div class="col-md-6">
                   <div class="mb-3">
+                    <label for="year" class="form-label">End Year</label>
+                    <div class="input-group">
+                      <input type="number" 
+                             class="form-control" 
+                             id="year" 
+                             placeholder="e.g., 2024"
+                             min="2000"
+                             max="2030"
+                             value="2024">
+                      <span class="input-group-text"><i class="fas fa-info-circle" data-bs-toggle="tooltip" title="Predictions available until 2030"></i></span>
+                    </div>
+                    <small class="text-muted">Note: Predictions are limited to years up to 2030</small>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="mb-3">
                     <label for="model" class="form-label">Prediction Model</label>
                     <select class="form-select" id="model" required>
                       <option value="logistic">Logistic Regression</option>
@@ -323,24 +339,6 @@
                       <option value="lstm">LSTM Neural Network</option>
                       <option value="arima">ARIMA Time Series</option>
                     </select>
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="mb-3">
-                    <label for="year" class="form-label">End Year</label>
-                    <input type="number" 
-                           class="form-control" 
-                           id="year" 
-                           placeholder="e.g., 2024"
-                           min="2000"
-                           max="2025"
-                           value="2024">
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="mb-3">
-                    <label for="days" class="form-label">Forecast Horizon (Days)</label>
-                    <input type="number" class="form-control" id="days" placeholder="e.g., 7" value="7" required>
                   </div>
                 </div>
               </div>
@@ -427,21 +425,32 @@
       const ticker = document.getElementById('symbol').value.trim().toUpperCase();
       const model = document.getElementById('model').value;
       const year = document.getElementById('year').value;
-      const days = document.getElementById('days').value;
+
+      // Validate year
+      if (year > 2030) {
+        const resultDiv = document.getElementById('predictionResult');
+        resultDiv.className = 'prediction-result';
+        resultDiv.style.display = 'block';
+        resultDiv.innerHTML = `
+          <div class="alert alert-danger">
+            <i class="fas fa-exclamation-circle me-2"></i>
+            Predictions are only available until 2030
+          </div>
+        `;
+        return;
+      }
 
       // Create FormData object
       const formData = new FormData();
       formData.append('ticker', ticker);
       formData.append('model', model);
       if (year) formData.append('end_year', year);
-      if (days) formData.append('horizon', days);
 
       try {
         console.log('Sending request with data:', {
           ticker,
           model,
-          end_year: year,
-          horizon: days
+          end_year: year
         });
 
         const response = await fetch('http://localhost:5000/predict', {
