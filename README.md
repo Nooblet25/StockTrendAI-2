@@ -1,3 +1,5 @@
+# Group 4
+
 # StockTrendAI - Smart Stock Market Analyzer
 
 A web-based application that uses machine learning models to predict stock market trends. The application provides real-time stock analysis and predictions using various ML models including Logistic Regression, Random Forest, XGBoost, LSTM, and ARIMA.
@@ -60,15 +62,3 @@ http://localhost:5000
 ## Data
 
 The application uses historical stock data stored in the `data` directory. Each stock has its own CSV file with OHLCV (Open, High, Low, Close, Volume) data.
-
-## Contributing
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add some amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details. 

@@ -126,8 +126,6 @@ def predict():
         try:
             if 'end_year' in request.form and request.form['end_year']:
                 end_year = int(request.form['end_year'])
-                if end_year > 2030:
-                    return jsonify({'error': 'Predictions are only available until 2030'}), 400
         except ValueError as e:
             print(f"Error parsing parameters: {e}")
             return jsonify({'error': 'Invalid year format'}), 400
@@ -244,7 +242,7 @@ def predict():
             elif model_choice == 'arima':
                 series = df['Close']
                 model = ARIMA(series, order=(5, 1, 0)).fit()
-                forecast = model.forecast(steps=7).tolist()  # Fixed 7-day forecast
+                forecast = model.forecast(steps=1).tolist()  # Only predict next day
                 return jsonify({
                     'model': 'arima',
                     'forecast': forecast,
